@@ -7,14 +7,14 @@ import { extendTheme, ChakraProvider } from "@chakra-ui/react";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const colors = {
   brand: {
-    bg: "#141850",
+    bgColor: "#141850",
   },
 };
 const theme = extendTheme({ colors });
 root.render(
-  <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <App />
-    </ChakraProvider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <ChakraProvider theme={theme}>
+    <App />
+  </ChakraProvider>
+  // </React.StrictMode>
 );
