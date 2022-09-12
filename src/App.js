@@ -13,43 +13,56 @@ function App() {
   const [coordinates, setCoordinates] = useState({});
   const [childClick, setChildClick] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [type, setType] = useState("restaurants");
+  const [filtered, setFiltered] = useState([]);
+  const [rating, setRating] = useState("");
+  // to get current position (logitude and latitude)
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       ({ coords: { latitude, longitude } }) => {
         setCoordinates({ lat: latitude, lng: longitude });
       }
     );
+    console.log(rating);
   }, []);
+  // rerender to get filtered places for rating
+  useEffect(() => {
+    const filterPlace = places?.map((data) => data.rating > rating);
+    setFiltered(filterPlace);
+  }, [rating]);
+  // for complety fetching data from api
   useEffect(() => {
     setIsLoading(true);
-    GetPlacesData(bounds)
+    GetPlacesData(type, bounds)
       .then((data) => data.json())
       .then((response) => {
         const { data } = response;
-        setPlaces(data);
+        setPlaces(data?.filter((place) => place.name && place.num_reviews > 0));
         setIsLoading(false);
       })
       .catch((err) => console.log(err));
-  }, [coordinates, bounds]);
+  }, [coordinates, bounds, type]);
   return (
     <Box>
-      <Grid templateColumns="repeat(3, 1fr)">
-        <GridItem colSpan={4}>
-          <Header />
+      <Grid templateColumns={{ base: "1fr", lg: "repeat(3, 1fr)" }}>
+        <GridItem colSpan={{ lg: 4 }}>
+          <Header setCoordinates={setCoordinates} />
         </GridItem>
         <GridItem>
           <List
-            places={places}
+            places={filtered.length ? filtered : places}
             childClick={childClick}
             isLoading={isLoading}
-            setIsLoading={setIsLoading}
+            type={type}
+            setType={setType}
+            // rating={rating}
+            setRating={setRating}
           />
         </GridItem>
-        <GridItem colStart={2} colEnd={4}>
+        <GridItem colStart={{ lg: 2 }} colEnd={{ lg: 4 }}>
           <Map
             setChildClick={setChildClick}
-            places={places}
+            places={filtered.length ? filtered : places}
             setBounds={setBounds}
             bounds={bounds}
             coordinates={coordinates}

@@ -10,11 +10,15 @@ import {
 
 const PlaceDetails = ({ place, refProp, selected }) => {
   // console.log(place);
-  if (selected) {
+  if (selected)
     refProp?.curren?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
+
   return (
-    <Box border="1px solid black" p={3} fontSize="xl">
+    <Box
+      border="1px solid black"
+      p={3}
+      // overflow="scroll"
+      fontSize="xl">
       <Image
         src={
           place?.photo?.images?.original?.url
@@ -24,7 +28,7 @@ const PlaceDetails = ({ place, refProp, selected }) => {
         alt="image"
         // boxSize={200}
         w="100%"
-        h="40vh"
+        h={{ base: "30vh", lg: "40vh" }}
         objectFit="cover"
       />
       <Heading as="h3" fontSize="2xl" py={2}>
