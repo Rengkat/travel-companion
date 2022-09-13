@@ -32,16 +32,20 @@ function App() {
   }, [rating]);
   // for complety fetching data from api
   useEffect(() => {
-    setIsLoading(true);
-    GetPlacesData(type, bounds)
-      .then((data) => data.json())
-      .then((response) => {
-        const { data } = response;
-        setPlaces(data?.filter((place) => place.name && place.num_reviews > 0));
-        setIsLoading(false);
-      })
-      .catch((err) => console.log(err));
-  }, [coordinates, bounds, type]);
+    if (bounds.ne && bounds.sw) {
+      setIsLoading(true);
+      GetPlacesData(type, bounds)
+        .then((data) => data.json())
+        .then((response) => {
+          const { data } = response;
+          setPlaces(
+            data?.filter((place) => place.name && place.num_reviews > 0)
+          );
+          setIsLoading(false);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [bounds, type]);
   return (
     <Box>
       <Grid templateColumns={{ base: "1fr", lg: "repeat(3, 1fr)" }}>

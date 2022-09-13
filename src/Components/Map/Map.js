@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { ImLocation2 } from "react-icons/im";
 import GoogleMapReact from "google-map-react";
-
+import mapStyles from "./mapStyle";
 const Map = ({
   setBounds,
   bounds,
@@ -24,7 +24,11 @@ const Map = ({
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
         defaultCenter={coordinates}
         center={coordinates}
-        options={""}
+        options={{
+          disableDefaultUI: true,
+          zoomControl: true,
+          styles: mapStyles,
+        }}
         onChange={(e) => {
           setCoordinates({ lat: e.center.lat, lng: e.center.lng });
           setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });

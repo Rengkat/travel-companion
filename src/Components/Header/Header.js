@@ -32,13 +32,13 @@ const Header = ({ setCoordinates }) => {
             bg="white"
             w={{ base: "10rem", md: "16rem", lg: "22rem" }}>
             {/* <Autocomplete onLoad={onLoa} onPlaceChanged={onPlaceChanged}> */}
-            <IoMdSearch fontSize={35} />
+            {/* <IoMdSearch fontSize={35} />
             <Input
               _placeholder={{ color: "brand.bgColor" }}
               placeholder="Search places..."
               border="none"
-              focusBorderColor="none"
-            />
+              focusBorderColor="none" */}
+            {/* /> */}
             {/* </Autocomplete> */}
           </Center>
         </Box>
